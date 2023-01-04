@@ -1,6 +1,8 @@
 #include "TB6600.h"
 
-tb6600::tb6600(){}
+tb6600::tb6600(){
+    setEnable(false);
+}
 
 tb6600::tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t micro_steps)
 {
@@ -8,16 +10,33 @@ tb6600::tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t mic
     directionPin = dir_pin;
     enablePin = enable_pin;
     microSteps = micro_steps;
+    
+    if(microSteps == 1){
+        ppr = pprs[0];
+    } else if(microSteps == 2){
+        ppr = pprs[1];
+    } else if(microSteps == 4){
+        ppr = pprs[2];
+    } else if(microSteps == 8){
+        ppr = pprs[3];
+    } else if(microSteps == 16){
+        ppr = pprs[4];
+    } else if(microSteps == 32){
+        ppr = pprs[5];
+    } else if(microSteps == 64){
+        ppr = pprs[6];
+    }
 
     pinMode(stepPin,OUTPUT);
     pinMode(enablePin,OUTPUT);
     pinMode(directionPin,OUTPUT);
+    setEnable(false);
 
 }
 
 // drives the stepper one step - better than duplicating this code
-//@param ms - milliseconds
-//@param pin - pin numer on your board for step
+//@param ms milliseconds
+//@param pin pin numer on your board for step
 void tb6600::stepper(uint16_t ms, uint8_t pin){
     digitalWrite(pin,HIGH);
     delayMicroseconds(ms);
@@ -47,7 +66,6 @@ void tb6600::step(){
         stepper(500,stepPin);
     }
 }
-
 
 // drives the stepper N steps
 void tb6600::step(int steps){
@@ -106,7 +124,38 @@ void tb6600::setDirection(uint8_t status){
     digitalWrite(directionPin,HIGH);
 }
 
-
-void tb6600::motorTest(){
-    step();
+//test method to run your motor(s) 
+void tb6600::motorTest()
+{
+    if (microSteps == 1) {
+        for(int a = 0; a < pprs[0]; a++)
+        {
+            stepper(500,stepPin);
+        }
+    } else if (microSteps == 2) {
+        for(int b = 0; b < pprs[1]; b++)
+        {
+            stepper(500,stepPin);
+        }
+    } else if (microSteps == 4) {
+        for(int c = 0; c < pprs[2]; c++)
+        {
+            stepper(500,stepPin);
+        }
+    } else if (microSteps == 8) {
+        for(int d = 0; d < pprs[3]; d++)
+        {
+            stepper(500,stepPin);
+        }
+    } else if (microSteps == 16) {
+        for(int e = 0; e < pprs[4]; e++)
+        {
+            stepper(500,stepPin);
+        }
+    } else if (microSteps == 32) {
+        for(int f = 0; f < pprs[5]; f++)
+        {
+            stepper(500,stepPin);
+        }
+    }
 }

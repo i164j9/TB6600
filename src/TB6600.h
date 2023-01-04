@@ -6,7 +6,9 @@ class tb6600{
     uint8_t directionPin;
     uint8_t enablePin;
     uint8_t microSteps;
-
+    int pprs[6] = {200,400,800,1600,3200,6400};
+    int ppr;
+    
     public:
         tb6600();
         tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t micro_steps);

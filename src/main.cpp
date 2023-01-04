@@ -1,42 +1,56 @@
 #include "TB6600.h"
+/*
+  NEMA17 stepper motors
 
+  detent torque: 18mN.m REF
+  rated voltage: 3.4VDC
+  rated current: 1.0 amp
+  Windinf inductance: 5.4x(1 +/- 20%)mH
+  step angle: 1.8 deg +/- 0.09 deg
+  max blank switching freq.: >= 2000pps
+  rotational inertia: 4.32g.cm 2
+
+*/
 #define STEP        5
 #define DIRECTION   4
 #define ENABLE      6
-#define MICROSTEP1  1   //ppr 200
-#define MICROSTEP2  2   //ppr 400 - 2A/2B
-#define MICROSTEP3  4   //ppr 800
-#define MICROSTEP4  8   //ppr 1600
-#define MICROSTEP5  16  //ppr 3200
-#define MICROSTEP6  32  //ppr 6400
+/*
+  pulses per rev:     200   400   800   1600    3200    6400
+  DEGREES per step:   1.8,  .9,   .45,  .225,   .1125,  .05625
+*/
+#define MICROSTEP1    1   //ppr 200
+#define MICROSTEP2    2   //ppr 400 - 2A/2B
+#define MICROSTEP4    4   //ppr 800 
+#define MICROSTEP8    8   //ppr 1600 
+#define MICROSTEP16  16   //ppr 3200 
+#define MICROSTEP32  32   //ppr 6400
 
-tb6600 mot(STEP,DIRECTION,ENABLE,MICROSTEP3);
+tb6600 mot(STEP,DIRECTION,ENABLE,MICROSTEP1);
 
 void setup() {
   mot.setEnable(true);
-  mot.setDirection(false);
 }
+
 //loop counter incremented each iteration
 int counter = 0;
 
 // run the loop below 100 times
-int target = 100;
+int target = 5;
 
 void loop() {
   //dependent on your motor wiring
-  
   //false runs my steppers CCW
   mot.setDirection(false);
 
   // run steppers one full revolution CCW
   mot.revolutions(1);
-
+  delay(1000);
   //true runs my steppers CW
   mot.setDirection(true);
   
   // run steppers one full revolution CW
   mot.revolutions(1);
-  
+  delay(1000);
   if(counter == target)
   {
     mot.setEnable(false);
