@@ -1,7 +1,7 @@
 /**
  * @file TB6600.cpp
  * @author Tom Miller (tom.tmiller@gmail.com)
- * @brief Stepper driver fo use on the Arduino platform
+ * @brief Stepper driver for use on the Arduino platform
  * @version 0.1
  * @date 2023-01-04
  * @copyright Copyleft (c) 2023
@@ -56,6 +56,7 @@ tb6600::tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t mic
     setEnable(false);
 
 }
+
 /*
  drives the stepper one step
  @param ms milliseconds
@@ -106,12 +107,11 @@ void tb6600::step(int revolutions, int multiplier){
     int rem = revolutions%100;
     int numloops = revolutions/100;
 
-    if(revs > 100){
-        
+    if(revs > 100)
+    {    
         for(; numloops > 0; numloops--)
         {
-
-            for(int i = 100*multiplier; i > 0; i--)
+            for(int i = (100*multiplier); i > 0; i--)
             {
              step();
             }
@@ -122,7 +122,9 @@ void tb6600::step(int revolutions, int multiplier){
             step();
         }
 
-    } else if(revs <= 100) {
+    }
+    else if(revs <= 100)
+    {
         for(int i = (revs*multiplier); i > 0; i--)
         {
             step();

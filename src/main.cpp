@@ -27,18 +27,20 @@
 
 tb6600 mot(STEP,DIRECTION,ENABLE,MICROSTEP1);
 
-void setup() {
+void setup()
+{
   mot.setEnable(true);
 }
 
 //loop counter incremented each iteration
 int counter = 0;
 
-// run the loop below 100 times
+// run the motor below Nrevs
 int target = 1;
 int revs = 180;
 
-void loop() {
+void loop()
+{
   //dependent on your motor wiring
   //false runs my steppers CCW
   mot.setDirection(true);
