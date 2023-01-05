@@ -28,9 +28,6 @@
 tb6600 mot(STEP,DIRECTION,ENABLE,MICROSTEP1);
 
 void setup() {
-  Serial.begin(115200);
-  while(!Serial);
-
   mot.setEnable(true);
 }
 

@@ -28,7 +28,6 @@ tb6600::tb6600(){
 
 tb6600::tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t micro_steps)
 {
-    Serial.begin(115200);
 
     stepPin = step_pin;
     directionPin = dir_pin;
@@ -106,10 +105,6 @@ void tb6600::step(int revolutions, int multiplier){
     int revs = revolutions;
     int rem = revolutions%100;
     int numloops = revolutions/100;
-    
-    Serial.println((String)revs+" revs");
-    Serial.println((String)rem+" rem");
-    Serial.println((String)numloops+" numloops");
 
     if(revs > 100){
         
