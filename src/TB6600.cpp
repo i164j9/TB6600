@@ -164,50 +164,61 @@ void tb6600::revolutions(int revolutions)
 // enables and disables the stepper driver
 void tb6600::setEnable(uint8_t status)
 {
-      if(status == true)
-    digitalWrite(enablePin,LOW);
-  else
-    digitalWrite(enablePin,HIGH);
+    if(status == true)
+        digitalWrite(enablePin,LOW);
+    else
+        digitalWrite(enablePin,HIGH);
 }
 
 // sets the rotational drirection of the stepper
 void tb6600::setDirection(uint8_t status)
 {
-      if(status == true)
-    digitalWrite(directionPin,LOW);
-  else
-    digitalWrite(directionPin,HIGH);
+    if(status == true)
+        digitalWrite(directionPin,LOW);
+    else
+        digitalWrite(directionPin,HIGH);
 }
 
 //test method to run your motor(s) 
 void tb6600::motorTest()
 {
-    if (microSteps == 1) {
+    if (microSteps == 1)
+    {
         for(int a = 0; a < pprs[0]; a++)
         {
             stepper(500,stepPin);
         }
-    } else if (microSteps == 2) {
+    }
+    else if (microSteps == 2)
+    {
         for(int b = 0; b < pprs[1]; b++)
         {
             stepper(500,stepPin);
         }
-    } else if (microSteps == 4) {
+    }
+    else if (microSteps == 4)
+    {
         for(int c = 0; c < pprs[2]; c++)
         {
             stepper(500,stepPin);
         }
-    } else if (microSteps == 8) {
+    }
+    else if (microSteps == 8)
+    {
         for(int d = 0; d < pprs[3]; d++)
         {
             stepper(500,stepPin);
         }
-    } else if (microSteps == 16) {
+    }
+    else if (microSteps == 16)
+    {
         for(int e = 0; e < pprs[4]; e++)
         {
             stepper(500,stepPin);
         }
-    } else if (microSteps == 32) {
+    }
+    else if (microSteps == 32)
+    {
         for(int f = 0; f < pprs[5]; f++)
         {
             stepper(500,stepPin);

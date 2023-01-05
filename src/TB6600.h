@@ -32,15 +32,15 @@ class tb6600{
     int pprs[6] = {200,400,800,1600,3200,6400};
     int ppr;
     
-    void stepper(int ms, uint8_t pin);
+    void stepper(int, uint8_t);
     public:
         tb6600();
-        tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t micro_steps);
+        tb6600(uint8_t, uint8_t, uint8_t,uint8_t);
         void step();
-        void step(int steps);
-        void step(int revolutions, int multiplier);
-        void setEnable(uint8_t status);
-        void setDirection(uint8_t status);
-        void revolutions(int rev);
+        void step(int);
+        void step(int, int);
+        void setEnable(uint8_t);
+        void setDirection(uint8_t);
+        void revolutions(int);
         void motorTest();
 };
