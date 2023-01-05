@@ -28,6 +28,8 @@ tb6600::tb6600(){
 
 tb6600::tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t micro_steps)
 {
+    Serial.begin(115200);
+
     stepPin = step_pin;
     directionPin = dir_pin;
     enablePin = enable_pin;
@@ -55,11 +57,12 @@ tb6600::tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t mic
     setEnable(false);
 
 }
-
-// drives the stepper one step
-//@param ms milliseconds
-//@param pin pin numer on your board for step
-void tb6600::stepper(uint16_t ms, uint8_t pin){
+/*
+ drives the stepper one step
+ @param ms milliseconds
+ @param pin pin numer on your board for step
+*/
+void tb6600::stepper(int ms, uint8_t pin){
     digitalWrite(pin,HIGH);
     delayMicroseconds(ms);
     digitalWrite(pin,LOW);
@@ -100,8 +103,35 @@ void tb6600::step(int steps){
 //@param revolutions - number of complete turns for the stepper to do
 //@param mulitplier - number of microsteps for the stepper to complete 1 full revolution
 void tb6600::step(int revolutions, int multiplier){
-    for (int i = 0; i < (revolutions*multiplier); i++){
-        step();
+    int revs = revolutions;
+    int rem = revolutions%100;
+    int numloops = revolutions/100;
+    
+    Serial.println((String)revs+" revs");
+    Serial.println((String)rem+" rem");
+    Serial.println((String)numloops+" numloops");
+
+    if(revs > 100){
+        
+        for(; numloops > 0; numloops--)
+        {
+
+            for(int i = 100*multiplier; i > 0; i--)
+            {
+             step();
+            }
+        }
+        
+        for(int i = (rem*multiplier); i > 0; i--)
+        {
+            step();
+        }
+
+    } else if(revs <= 100) {
+        for(int i = (revs*multiplier); i > 0; i--)
+        {
+            step();
+        }
     }
 }
 
@@ -109,22 +139,22 @@ void tb6600::step(int revolutions, int multiplier){
 void tb6600::revolutions(int revolutions){
     if(microSteps == 1){
         //ppr 200
-        step(revolutions,200);
+        step(revolutions,pprs[0]);
     } else if(microSteps == 2){
         //ppr 400
-        step(revolutions,400);
+        step(revolutions,pprs[1]);
     } else if(microSteps == 4){
         //ppr 800
-        step(revolutions,800);
+        step(revolutions,pprs[2]);
     } else if(microSteps == 8){
         //ppr 1600
-        step(revolutions,1600);
+        step(revolutions,pprs[3]);
     } else if(microSteps == 16){
         // ppr 3200
-        step(revolutions,3200);
+        step(revolutions,pprs[4]);
     } else if(microSteps == 32){
         //ppr 6400
-        step(revolutions,6400);
+        step(revolutions,pprs[5]);
     }
     //delay needed otherwise steps will be skipped when changing direction rapidly
     delay(10);

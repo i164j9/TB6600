@@ -28,6 +28,9 @@
 tb6600 mot(STEP,DIRECTION,ENABLE,MICROSTEP1);
 
 void setup() {
+  Serial.begin(115200);
+  while(!Serial);
+
   mot.setEnable(true);
 }
 
@@ -35,25 +38,29 @@ void setup() {
 int counter = 0;
 
 // run the loop below 100 times
-int target = 5;
+int target = 1;
+int revs = 180;
 
 void loop() {
   //dependent on your motor wiring
   //false runs my steppers CCW
-  mot.setDirection(false);
-
-  // run steppers one full revolution CCW
-  mot.revolutions(1);
-  delay(1000);
-  //true runs my steppers CW
   mot.setDirection(true);
   
+  // run steppers one full revolution CCW
+  mot.revolutions(revs);
+  delay(500);
+  
+  //true runs my steppers CW
+  mot.setDirection(false);
+  
   // run steppers one full revolution CW
-  mot.revolutions(1);
-  delay(1000);
+  mot.revolutions(revs);
+  
+  counter++;
+
   if(counter == target)
   {
     mot.setEnable(false);
   }
-  counter++;
+  
 }
