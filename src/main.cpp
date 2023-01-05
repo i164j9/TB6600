@@ -7,7 +7,7 @@
   rated current: 1.0 amp
   Windinf inductance: 5.4x(1 +/- 20%)mH
   step angle: 1.8 deg +/- 0.09 deg
-  max blank switching freq.: >= 2000pps
+  max blank switching freq.: >= 2000pps 200khz
   rotational inertia: 4.32g.cm 2
 
 */

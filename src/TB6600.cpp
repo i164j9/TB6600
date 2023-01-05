@@ -22,13 +22,13 @@
 
 #include "TB6600.h"
 
-tb6600::tb6600(){
+tb6600::tb6600()
+{
     setEnable(false);
 }
 
 tb6600::tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t micro_steps)
 {
-
     stepPin = step_pin;
     directionPin = dir_pin;
     enablePin = enable_pin;
@@ -54,7 +54,6 @@ tb6600::tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t mic
     pinMode(enablePin,OUTPUT);
     pinMode(directionPin,OUTPUT);
     setEnable(false);
-
 }
 
 /*
@@ -62,7 +61,8 @@ tb6600::tb6600(uint8_t step_pin, uint8_t dir_pin, uint8_t enable_pin,uint8_t mic
  @param ms milliseconds
  @param pin pin numer on your board for step
 */
-void tb6600::stepper(int ms, uint8_t pin){
+void tb6600::stepper(int ms, uint8_t pin)
+{
     digitalWrite(pin,HIGH);
     delayMicroseconds(ms);
     digitalWrite(pin,LOW);
@@ -70,7 +70,8 @@ void tb6600::stepper(int ms, uint8_t pin){
 }
 
 // drives the stepper 1 step based on the microstepping setup
-void tb6600::step(){
+void tb6600::step()
+{
     if(microSteps == 1){
         //ppr 200
         stepper(500,stepPin);
@@ -93,7 +94,8 @@ void tb6600::step(){
 }
 
 // drives the stepper N steps
-void tb6600::step(int steps){
+void tb6600::step(int steps)
+{
     for (int i = 0; i < steps; i++){
         step();
     }
@@ -102,7 +104,8 @@ void tb6600::step(int steps){
 // drives the stepper N revolutions and stops
 //@param revolutions - number of complete turns for the stepper to do
 //@param mulitplier - number of microsteps for the stepper to complete 1 full revolution
-void tb6600::step(int revolutions, int multiplier){
+void tb6600::step(int revolutions, int multiplier)
+{
     int revs = revolutions;
     int rem = revolutions%100;
     int numloops = revolutions/100;
@@ -133,7 +136,8 @@ void tb6600::step(int revolutions, int multiplier){
 }
 
 //@TODO setup to drive the stepper 1 revolution based on microstepping
-void tb6600::revolutions(int revolutions){
+void tb6600::revolutions(int revolutions)
+{
     if(microSteps == 1){
         //ppr 200
         step(revolutions,pprs[0]);
@@ -158,7 +162,8 @@ void tb6600::revolutions(int revolutions){
 }
 
 // enables and disables the stepper driver
-void tb6600::setEnable(uint8_t status){
+void tb6600::setEnable(uint8_t status)
+{
       if(status == true)
     digitalWrite(enablePin,LOW);
   else
@@ -166,7 +171,8 @@ void tb6600::setEnable(uint8_t status){
 }
 
 // sets the rotational drirection of the stepper
-void tb6600::setDirection(uint8_t status){
+void tb6600::setDirection(uint8_t status)
+{
       if(status == true)
     digitalWrite(directionPin,LOW);
   else
